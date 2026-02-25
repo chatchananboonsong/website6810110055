@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tekken 8 Roster</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <h1>Tekken 8 Iron Fist Tournament</h1>
+
+  <div class="grid">
+    {% for char in characters %}
+    <div class="card">
+      <div class="img-box">
+        <img src="{{ char.img }}" alt="{{ char.name }}">
+      </div>
+      <div class="info">
+        <h3>{{ char.name }}</h3>
+        <p>{{ char.style }} | {{ char.origin }}</p>
+        <button class="select-btn" onclick="alert('READY FOR THE NEXT BATTLE: {{ char.name }}')">
+            Select Fighter
+        </button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</body>
+</html>

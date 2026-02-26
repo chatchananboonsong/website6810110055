@@ -7,6 +7,95 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
     /* สไตล์เพิ่มเติมสำหรับโครงสร้างหน้า Wiki */
+    .wiki-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        padding: 0 20px;
+        color: white;
+    }
+
+    .main-content {
+        flex: 1;
+        min-width: 300px;
+        text-align: left;
+    }
+
+    .main-content h1 {
+        text-align: left;
+        border-bottom: 3px solid var(--red);
+        padding-bottom: 10px;
+        margin-top: 0;
+    }
+
+    .wiki-section {
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+
+    .wiki-section h2 {
+        border-bottom: 1px solid #444;
+        padding-bottom: 5px;
+        font-size: 1.5rem;
+    }
+
+    /* สไตล์ Infobox ด้านข้าง */
+    .infobox {
+        width: 320px;
+        background: var(--gray);
+        border: 1px solid #444;
+        border-radius: 4px;
+        padding: 0;
+        height: fit-content;
+    }
+
+    .infobox-header {
+        background: var(--red);
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.2rem;
+    }
+
+    .infobox-image {
+        background: #252525;
+        height: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 6rem;
+        border-bottom: 1px solid #444;
+    }
+
+    .infobox-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+    }
+
+    .infobox-table tr {
+        border-bottom: 1px solid #333;
+    }
+
+    .infobox-table th {
+        background: #222;
+        text-align: left;
+        padding: 10px;
+        width: 40%;
+        color: var(--text-gray);
+    }
+
+    .infobox-table td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .back-btn-container {
+        margin-top: 20px;
+    }
   </style>
 </head>
 <body>

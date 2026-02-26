@@ -23,9 +23,11 @@
         <p><strong>Nickname:</strong> {{ country.capital }}</p>
         <p><strong>Strategy:</strong> {{ country.continent }}</p>
         
-        <button class="select-btn" onclick="alert('Ready to train {{ country.name }}?')">
-            Train Now
-        </button>
+        <a href="{{ url_for('detail', name=country.name) }}" style="text-decoration: none;">
+            <button class="select-btn">
+                Train Now
+            </button>
+        </a>
       </div>
     </div>
     {% endfor %}

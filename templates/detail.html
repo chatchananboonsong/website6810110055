@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ character.name }} - Umamusume Wiki</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    /* สไตล์เพิ่มเติมสำหรับหน้า Wiki */
+    .wiki-container {
+        max-width: 900px;
+        margin: 40px auto;
+        display: flex;
+        gap: 30px;
+        padding: 20px;
+    }
+    .wiki-content { flex: 2; text-align: left; }
+    .infobox {
+        flex: 1;
+        background: var(--gray);
+        border: 1px solid var(--red);
+        border-radius: 8px;
+        padding: 15px;
+        min-width: 280px;
+    }
+    .infobox-header {
+        background: var(--red);
+        color: white;
+        padding: 8px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .infobox-img {
+        width: 100%;
+        height: 200px;
+        background: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 5rem;
+        margin-bottom: 15px;
+    }
+    .data-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #333;
+        font-size: 0.9rem;
+    }
+    .data-label { color: var(--text-gray); font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="wiki-container">
+    <div class="wiki-content">
+      <h1 style="text-align: left; border-bottom: 2px solid var(--red);">{{ character.name }}</h1>
+      <p><strong>{{ character.name }}</strong> เป็นตัวละครในโปรเจกต์ Umamusume: Pretty Derby</p>
+      <h2 style="border-bottom: 1px solid #333;">บทนำ</h2>
+      <p>ข้อมูลเบื้องต้นเกี่ยวกับการฝึกซ้อมและการวิ่งในสนาม...</p>
+      
+      <div style="margin-top: 30px;">
+        <a href="{{ url_for('index') }}" class="select-btn" style="padding: 10px 20px; text-decoration: none;">
+            ← Back to Directory
+        </a>
+      </div>
+    </div>
+
+    <div class="infobox">
+      <div class="infobox-header">{{ character.name }}</div>
+      <div class="infobox-img">{{ character.name[0] }}</div>
+      
+      <div class="data-row">
+        <span class="data-label">Japanese Name</span>
+        <span>{{ character.capital }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Strategy</span>
+        <span>{{ character.continent }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Status</span>
+        <span style="color: #00ff00;">Active</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

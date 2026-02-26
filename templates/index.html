@@ -3,24 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Tekken 8 Roster</title>
+  <title>Umamusume Explorer</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-  <h1>Tekken 8 Iron Fist Tournament</h1>
+  <h1>🏇 Umamusume Derby Directory</h1>
 
   <div class="grid">
-    {% for char in characters %}
+    {% for country in countries %}
     <div class="card">
       <div class="img-box">
-        <img src="{{ char.img }}" alt="{{ char.name }}">
+        <div style="font-size: 4rem; color: var(--red); font-weight: bold;">
+            {{ country.name[0] }}
+        </div>
       </div>
       <div class="info">
-        <h3>{{ char.name }}</h3>
-        <p>{{ char.style }} | {{ char.origin }}</p>
-        <button class="select-btn" onclick="alert('READY FOR THE NEXT BATTLE: {{ char.name }}')">
-            Select Fighter
+        <h3>{{ country.name }}</h3>
+        <p><strong>Nickname:</strong> {{ country.capital }}</p>
+        <p><strong>Strategy:</strong> {{ country.continent }}</p>
+        
+        <button class="select-btn" onclick="alert('Ready to train {{ country.name }}?')">
+            Train Now
         </button>
       </div>
     </div>

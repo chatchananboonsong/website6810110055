@@ -58,8 +58,10 @@ h1 {
 .img-box img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* บังคับให้รูปเต็มกรอบโดยไม่เสียสัดส่วน */
-    object-position: top; /* เน้นให้เห็นส่วนหัว/หน้าตัวละคร */
+    /* เปลี่ยนจาก cover เป็น contain เพื่อให้เห็นรูปม้าสาวเต็มตัว ไม่โดนตัดหัวหรือขา */
+    object-fit: contain; 
+    object-position: center;
+    padding: 15px; /* เพิ่มพื้นที่ว่างรอบรูปเล็กน้อยเพื่อให้ดูโปร่งขึ้น */
 }
 
 .card:hover .img-box img {

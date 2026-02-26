@@ -6,84 +6,63 @@
   <title>{{ character.name }} - Umamusume Wiki</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
-    /* สไตล์เพิ่มเติมสำหรับหน้า Wiki */
-    .wiki-container {
-        max-width: 900px;
-        margin: 40px auto;
-        display: flex;
-        gap: 30px;
-        padding: 20px;
-    }
-    .wiki-content { flex: 2; text-align: left; }
-    .infobox {
-        flex: 1;
-        background: var(--gray);
-        border: 1px solid var(--red);
-        border-radius: 8px;
-        padding: 15px;
-        min-width: 280px;
-    }
-    .infobox-header {
-        background: var(--red);
-        color: white;
-        padding: 8px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-    .infobox-img {
-        width: 100%;
-        height: 200px;
-        background: #333;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 5rem;
-        margin-bottom: 15px;
-    }
-    .data-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 5px 0;
-        border-bottom: 1px solid #333;
-        font-size: 0.9rem;
-    }
-    .data-label { color: var(--text-gray); font-weight: bold; }
+    /* สไตล์เพิ่มเติมสำหรับโครงสร้างหน้า Wiki */
   </style>
 </head>
 <body>
 
   <div class="wiki-container">
-    <div class="wiki-content">
-      <h1 style="text-align: left; border-bottom: 2px solid var(--red);">{{ character.name }}</h1>
-      <p><strong>{{ character.name }}</strong> เป็นตัวละครในโปรเจกต์ Umamusume: Pretty Derby</p>
-      <h2 style="border-bottom: 1px solid #333;">บทนำ</h2>
-      <p>ข้อมูลเบื้องต้นเกี่ยวกับการฝึกซ้อมและการวิ่งในสนาม...</p>
+    <div class="main-content">
+      <h1>{{ character.name }}</h1>
       
-      <div style="margin-top: 30px;">
-        <a href="{{ url_for('index') }}" class="select-btn" style="padding: 10px 20px; text-decoration: none;">
-            ← Back to Directory
+      <div class="wiki-section">
+        <p><strong>{{ character.name }}</strong> ({{ character.capital }}) เป็นหนึ่งในตัวละครหลักจากโปรเจกต์ <em>Umamusume: Pretty Derby</em> ที่มีความสามารถโดดเด่นในด้านการวิ่งแบบ {{ character.continent }}</p>
+      </div>
+
+      <div class="wiki-section">
+        <h2>ประวัติการฝึกซ้อม</h2>
+        <p>ในฐานะนักวิ่งสาย {{ character.continent }} การฝึกซ้อมจะเน้นไปที่การรักษาความเร็วและความทนทานในสนามแข่ง เพื่อเตรียมพร้อมสำหรับการแข่งขัน Derby Directory ต่อไป</p>
+      </div>
+
+      <div class="wiki-section">
+        <h2>เมนูการฝึกปัจจุบัน</h2>
+        <ul>
+            <li>🏃 Speed Training: เน้นเพิ่มขีดจำกัดความเร็ว</li>
+            <li>💪 Stamina Training: เพิ่มความทนทานในการวิ่งระยะไกล</li>
+        </ul>
+      </div>
+
+      <div class="back-btn-container">
+        <a href="{{ url_for('index') }}" style="text-decoration: none;">
+            <button class="select-btn" style="width: auto; padding: 10px 25px;">← กลับหน้าหลัก</button>
         </a>
       </div>
     </div>
 
-    <div class="infobox">
+    <aside class="infobox">
       <div class="infobox-header">{{ character.name }}</div>
-      <div class="infobox-img">{{ character.name[0] }}</div>
-      
-      <div class="data-row">
-        <span class="data-label">Japanese Name</span>
-        <span>{{ character.capital }}</span>
+      <div class="infobox-image">
+        {{ character.name[0] }}
       </div>
-      <div class="data-row">
-        <span class="data-label">Strategy</span>
-        <span>{{ character.continent }}</span>
-      </div>
-      <div class="data-row">
-        <span class="data-label">Status</span>
-        <span style="color: #00ff00;">Active</span>
-      </div>
-    </div>
+      <table class="infobox-table">
+        <tr>
+          <th>ชื่อภาษาญี่ปุ่น</th>
+          <td>{{ character.capital }}</td>
+        </tr>
+        <tr>
+          <th>สไตล์การวิ่ง</th>
+          <td>{{ character.continent }}</td>
+        </tr>
+        <tr>
+          <th>สถานะ</th>
+          <td style="color: #00ff00;">กำลังฝึกซ้อม</td>
+        </tr>
+        <tr>
+            <th>ประเภท</th>
+            <td>Umamusume</td>
+        </tr>
+      </table>
+    </aside>
   </div>
 
 </body>

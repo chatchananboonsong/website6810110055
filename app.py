@@ -13,19 +13,28 @@ def get_combined_data():
         res_flags = requests.get("https://countriesnow.space/api/v0.1/countries/flag/images")
         flags_data = res_flags.json().get("data", [])
 
+        # 3. ดึงข้อมูลเมืองหลวง
         res_capitals = requests.get("https://countriesnow.space/api/v0.1/countries/capital")
         capitals_data = res_capitals.json().get("data", [])
         capital_map = {item['name']: item['capital'] for item in capitals_data}
 
-        # 3. นำรูปมาใส่ในข้อมูลหลัก โดยใช้ชื่อประเทศเป็นตัวเชื่อม
-        # สร้าง Dictionary เพื่อให้ค้นหารูปได้เร็วขึ้น
+        # 4. ดึงข้อมูลพิกัด (Lat/Long)
+        res_positions = requests.get("https://countriesnow.space/api/v0.1/countries/positions")
+        pos_data = res_positions.json().get("data", [])
+        pos_map = {item['name']: {'lat': item['lat'], 'long': item['long']} for item in pos_data}
+
+        # สร้าง Map สำหรับรูปธง
         flag_map = {item['name']: item['flag'] for item in flags_data}
         
         for country in countries_data:
-            # เอารูปจาก flag_map มาใส่ ถ้าไม่มีให้ใส่รูปว่างๆ ไว้
-            country['flag_url'] = flag_map.get(country['country'], "https://via.placeholder.com/150")
-
-            country['capital'] = capital_map.get(country['country'], "")
+            name = country['country']
+            country['flag_url'] = flag_map.get(name, "https://via.placeholder.com/150")
+            country['capital'] = capital_map.get(name, "")
+            
+            # ใส่ค่าพิกัด ถ้าไม่มีให้เป็น 0
+            coords = pos_map.get(name, {'lat': 0, 'long': 0})
+            country['lat'] = coords['lat']
+            country['long'] = coords['long']
             
         return countries_data
     except Exception as e:
@@ -44,14 +53,6 @@ def detail(name):
     if not country:
         abort(404)
     return render_template('detail.html', country=country)
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/settings')
-def settings():
-    return render_template('settings.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

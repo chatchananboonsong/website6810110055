@@ -4,26 +4,39 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{{ country.country }} - Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
-        <a href="/">← Back to Home</a>
+    <div style="max-width: 900px; margin: auto; padding: 20px;">
         
-        <div style="text-align: center; margin-top: 2rem;">
+        <a href="/" class="back-btn">
+            <span class="arrow">←</span> กลับสู่หน้าหลัก
+        </a>
+        
+        <div style="background: var(--card-bg); padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;">
+            
             {% if country.flag_url %}
-                <img src="{{ country.flag_url }}" alt="flag" style="max-width: 300px; border: 1px solid #ddd;">
+                <img src="{{ country.flag_url }}" alt="flag" 
+                     style="max-width: 320px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 5px solid #f9faff;">
             {% endif %}
-            <h1>{{ country.country }}</h1>
-        </div>
 
-        <h3>Cities in this country:</h3>
-        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-            {% for city in country.cities %}
-                <span style="background: #eee; padding: 5px 10px; border-radius: 5px; font-size: 0.9rem;">
-                    {{ city }}
-                </span>
-            {% endfor %}
+            <h1 style="margin-top: 30px; margin-bottom: 10px;">{{ country.country }}</h1>
+            <p style="color: var(--text-soft); margin-bottom: 40px;">Region: Global Information</p>
+
+            <hr style="border: 0; border-top: 2px solid #f1f2f6; margin-bottom: 40px;">
+
+            <h3 style="text-align: left; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center;">
+                <span style="margin-right: 10px;">🏙️</span> รายชื่อเมืองในประเทศ
+            </h3>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-start;">
+                {% for city in country.cities %}
+                    <span style="background: #f1f2f6; color: var(--text-main); padding: 10px 20px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border: 1px solid #eee;">
+                        {{ city }}
+                    </span>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </body>

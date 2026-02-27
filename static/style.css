@@ -112,3 +112,36 @@ h1 {
     box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
     filter: brightness(1.1);
 }
+/* ตกแต่งปุ่ม Back to Home ใหม่ให้เข้ากับ Theme พาสเทล */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 25px;
+    background: #ffffff;
+    color: var(--primary);
+    text-decoration: none;
+    border-radius: 15px; /* ทรงเหลี่ยมมนเข้ากับ Card */
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid #eee;
+    margin-bottom: 30px;
+}
+
+.back-btn:hover {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border-color: transparent;
+    transform: translateX(-8px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.2);
+}
+
+.back-btn .arrow {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover .arrow {
+    transform: translateX(-5px);
+}

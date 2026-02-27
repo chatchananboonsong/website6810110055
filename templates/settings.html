@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Settings - Country Explorer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">🌍 CountryExplorer</a>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div style="max-width: 600px; margin: 40px auto; padding: 20px;">
+        <div style="background: var(--card-bg); padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <h2 style="color: var(--primary); margin-bottom: 30px;">⚙️ การตั้งค่า (Settings)</h2>
+            
+            <div class="setting-item">
+                <div style="text-align: left;">
+                    <h4 style="margin: 0; color: var(--text-main);">โหมดถนอมสายตา (Dark Mode)</h4>
+                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-soft);">เปลี่ยนพื้นหลังเป็นสีเข้ม</p>
+                </div>
+                <input type="checkbox" class="toggle-switch">
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #f1f2f6; margin: 20px 0;">
+
+            <div class="setting-item">
+                <div style="text-align: left;">
+                    <h4 style="margin: 0; color: var(--text-main);">ภาษา (Language)</h4>
+                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-soft);">เลือกภาษาที่คุณถนัด</p>
+                </div>
+                <select style="padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
+                    <option>ภาษาไทย</option>
+                    <option>English</option>
+                </select>
+            </div>
+
+            <button class="select-btn" style="margin-top: 40px;">บันทึกการตั้งค่า</button>
+        </div>
+    </div>
+</body>
+</html>

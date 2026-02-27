@@ -39,5 +39,9 @@ def detail(name):
         abort(404)
     return render_template('detail.html', country=country)
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

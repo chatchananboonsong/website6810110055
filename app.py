@@ -31,7 +31,7 @@ def get_combined_data():
             country['flag_url'] = flag_map.get(name, "https://via.placeholder.com/150")
             country['capital'] = capital_map.get(name, "")
             
-            # ใส่ค่าพิกัด ถ้าไม่มีให้เป็น 0
+            # ใส่ค่าพิกัด
             coords = pos_map.get(name, {'lat': 0, 'long': 0})
             country['lat'] = coords['lat']
             country['long'] = coords['long']
@@ -40,6 +40,8 @@ def get_combined_data():
     except Exception as e:
         print(f"Error: {e}")
         return []
+
+# --- Routes ---
 
 @app.route('/')
 def index():
@@ -53,6 +55,14 @@ def detail(name):
     if not country:
         abort(404)
     return render_template('detail.html', country=country)
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

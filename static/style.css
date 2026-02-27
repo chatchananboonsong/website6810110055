@@ -203,17 +203,21 @@ h1 {
 }
 
 .nav-link {
-    color: var(--text-main);
+    background: linear-gradient(135deg, var(--secondary), var(--primary)); /* ใช้สีมิ้นท์ไล่ไปม่วง */
+    color: white;
     text-decoration: none;
-    font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 10px;
-    transition: 0.3s;
+    padding: 8px 25px;
+    border-radius: 12px; /* ความโค้งมนเท่ากับปุ่ม Explore */
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.2);
 }
 
 .nav-link:hover {
-    background: var(--bg-light);
-    color: var(--primary);
+    transform: translateY(-2px);       /* ลอยขึ้น 2px */
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.3); /* เงาเข้มขึ้น */
+    filter: brightness(1.1);
 }
 
 /* ปรับ body เล็กน้อยเพื่อให้ Navbar ไม่บังเนื้อหา */
@@ -244,6 +248,7 @@ body {
 .nav-menu {
     display: flex;
     align-items: center;
+    gap: 15px;
 }
 /* Navbar Styles */
 .navbar {
@@ -309,12 +314,6 @@ body {
 .login-input:focus {
     outline: none;
     border-color: var(--secondary);
-}
-
-/* สไตล์เพิ่มเติมสำหรับหน้า Settings */
-.setting-link:hover {
-    color: var(--primary);
-    transform: rotate(30deg); /* เพิ่มลูกเล่นหมุนเฟืองเล็กน้อย */
 }
 
 .setting-item {

@@ -220,3 +220,28 @@ h1 {
 body {
     padding-top: 0; /* เปลี่ยนจาก 40px เป็น 0 เพราะใช้ Navbar แทน */
 }
+
+/* สไตล์สำหรับปุ่ม Login บน Navbar */
+.login-btn {
+    background: linear-gradient(135deg, var(--secondary), var(--primary)); /* ใช้สีมิ้นท์ไล่ไปม่วง */
+    color: white;
+    text-decoration: none;
+    padding: 8px 25px;
+    border-radius: 12px; /* ความโค้งมนเท่ากับปุ่ม Explore */
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.2);
+}
+
+.login-btn:hover {
+    transform: translateY(-2px); /* ขยับขึ้นเล็กน้อยเมื่อ Hover */
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.3);
+    filter: brightness(1.1);
+}
+
+/* ปรับระยะห่าง Navbar เล็กน้อย */
+.nav-menu {
+    display: flex;
+    align-items: center;
+}

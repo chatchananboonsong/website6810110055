@@ -3,27 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Umamusume Derby Directory</title>
+  <title>Country Explorer</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-  <h1>country in world</h1>
+  <h1>Country in World</h1>
 
   <div class="grid">
     {% for item in countries %}
     <div class="card">
       <div class="img-box">
-        <div style="font-size: 4rem; color: var(--primary); font-weight: bold;">
-            {{ item.country[0] }}
-        </div>
+        {% if item.flag_url %}
+          <img src="{{ item.flag_url }}" alt="{{ item.country }}" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
+        {% else %}
+          <div style="font-size: 4rem; color: var(--primary); font-weight: bold;">
+              {{ item.country[0] }}
+          </div>
+        {% endif %}
       </div>
+      
       <div class="info">
         <h3>{{ item.country }}</h3>
-        <p><strong>Region:</strong> Global</p>
+        <p><strong>Cities:</strong> {{ item.cities|length }}</p>
         
         <a href="{{ url_for('detail', name=item.country) }}" style="text-decoration: none;">
-            <button class="select-btn">Train Now</button>
+            <button class="select-btn">Explore Now</button>
         </a>
       </div>
     </div>

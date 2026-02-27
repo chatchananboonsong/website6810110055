@@ -3,61 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ item.country }} - Wiki</title>
+  <title>{{ country.country }} - Wiki</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <style>
-    .wiki-container { max-width: 1000px; margin: 40px auto; display: flex; flex-wrap: wrap; gap: 30px; padding: 0 20px; }
-    .main-content { flex: 1; min-width: 300px; text-align: left; }
-    .main-content h1 { border-bottom: 4px solid var(--secondary); padding-bottom: 15px; color: var(--primary); }
-    .infobox { width: 320px; background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; height: fit-content; }
-    .infobox-header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 15px; text-align: center; font-weight: bold; }
-    .infobox-image { background: #f8f9fa; height: 250px; display: flex; align-items: center; justify-content: center; font-size: 5rem; color: var(--primary); }
-    .infobox-table { width: 100%; border-collapse: collapse; }
-    .infobox-table th, .infobox-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
-  </style>
 </head>
 <body>
+    <div style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
+        <a href="/">← Back to Home</a>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            {% if country.flag_url %}
+                <img src="{{ country.flag_url }}" alt="flag" style="max-width: 300px; border: 1px solid #ddd;">
+            {% endif %}
+            <h1>{{ country.country }}</h1>
+        </div>
 
-  <div class="wiki-container">
-    <div class="main-content">
-      <h1>{{ item.country }}</h1>
-      
-      <div class="wiki-section">
-        <h2>รายละเอียดเมืองหลวง (Main Base)</h2>
-        {% if item.cities and item.cities|length > 0 %}
-          <p>เมืองหลวงของ <strong>{{ item.country }}</strong> คือ <strong>{{ item.cities[0] }}</strong></p>
-          <p>ซึ่งเมือง {{ item.cities[0] }} นี้เป็นศูนย์กลางหลักในการฝึกซ้อมของม้าสาวในภูมิภาคนี้</p>
-        {% else %}
-          <p>ไม่พบข้อมูลเมืองหลัก</p>
-        {% endif %}
-      </div>
-
-      <div style="margin-top: 30px;">
-        <a href="{{ url_for('index') }}" style="text-decoration: none;">
-          <button class="select-btn" style="width: auto; padding: 10px 25px;">← กลับหน้าหลัก</button>
-        </a>
-      </div>
+        <h3>Cities in this country:</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            {% for city in country.cities %}
+                <span style="background: #eee; padding: 5px 10px; border-radius: 5px; font-size: 0.9rem;">
+                    {{ city }}
+                </span>
+            {% endfor %}
+        </div>
     </div>
-
-    <aside class="infobox">
-      <div class="infobox-header">{{ item.country }}</div>
-      <div class="infobox-image">{{ item.country[0] }}</div>
-      <table class="infobox-table">
-        <tr>
-          <th>ภูมิภาค</th>
-          <td>Global</td>
-        </tr>
-        <tr>
-          <th>เมืองหลวง</th>
-          <td>{{ item.cities[0] if item.cities else 'N/A' }}</td>
-        </tr>
-        <tr>
-          <th>สถานะ</th>
-          <td style="color: #2ecc71; font-weight: bold;">Verified</td>
-        </tr>
-      </table>
-    </aside>
-  </div>
-
 </body>
 </html>

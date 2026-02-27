@@ -3,34 +3,41 @@ import requests
 
 app = Flask(__name__)
 
-API_URL = "https://countriesnow.space/api/v0.1/countries"
-
-def get_countries_from_api():
+def get_combined_data():
     try:
-        response = requests.get(API_URL)
-        response.raise_for_status()
-        json_data = response.json()
-        return json_data.get("data", [])
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching data: {e}")
+        # 1. ดึงข้อมูลชื่อประเทศและเมือง
+        res_countries = requests.get("https://countriesnow.space/api/v0.1/countries")
+        countries_data = res_countries.json().get("data", [])
+
+        # 2. ดึงข้อมูลรูปธงชาติ
+        res_flags = requests.get("https://countriesnow.space/api/v0.1/countries/flag/images")
+        flags_data = res_flags.json().get("data", [])
+
+        # 3. นำรูปมาใส่ในข้อมูลหลัก โดยใช้ชื่อประเทศเป็นตัวเชื่อม
+        # สร้าง Dictionary เพื่อให้ค้นหารูปได้เร็วขึ้น
+        flag_map = {item['name']: item['flag'] for item in flags_data}
+        
+        for country in countries_data:
+            # เอารูปจาก flag_map มาใส่ ถ้าไม่มีให้ใส่รูปว่างๆ ไว้
+            country['flag_url'] = flag_map.get(country['country'], "https://via.placeholder.com/150")
+            
+        return countries_data
+    except Exception as e:
+        print(f"Error: {e}")
         return []
 
 @app.route('/')
 def index():
-    countries = get_countries_from_api()
+    countries = get_combined_data()
     return render_template('index.html', countries=countries)
 
 @app.route('/country/<name>')
 def detail(name):
-    all_countries = get_countries_from_api()
-    # ค้นหาข้อมูลประเทศที่ชื่อตรงกับที่ส่งมา
-    country_data = next((item for item in all_countries if item["country"] == name), None)
-    
-    if country_data is None:
+    all_countries = get_combined_data()
+    country = next((item for item in all_countries if item["country"] == name), None)
+    if not country:
         abort(404)
-        
-    # แก้ไขชื่อตัวแปรเป็น item เพื่อให้ detail.html ใช้งานได้
-    return render_template('detail.html', item=country_data)
+    return render_template('detail.html', country=country)
 
 if __name__ == '__main__':
     app.run(debug=True)

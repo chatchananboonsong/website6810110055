@@ -9,20 +9,29 @@
 </head>
 <body>
     <div style="max-width: 900px; margin: auto; padding: 20px;">
-        
         <a href="/" class="back-btn">
             <span class="arrow">←</span> กลับสู่หน้าหลัก
         </a>
         
         <div style="background: var(--card-bg); padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;">
-            
             {% if country.flag_url %}
                 <img src="{{ country.flag_url }}" alt="flag" 
                      style="max-width: 320px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 5px solid #f9faff;">
             {% endif %}
 
-            <h1 style="margin-top: 30px; margin-bottom: 10px;">{{ country.country }}</h1>
-            <p style="color: var(--text-soft); margin-bottom: 40px;">Region: Global Information</p>
+            <h1 style="margin-top: 30px; margin-bottom: 5px;">{{ country.country }}</h1>
+            
+            <div class="rating-container" style="margin-bottom: 30px;">
+                <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 5px;">Rate this country:</p>
+                <div class="stars" id="star-rating">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <p id="rating-status" style="font-size: 0.8rem; color: var(--secondary); margin-top: 5px; height: 1em;"></p>
+            </div>
 
             <hr style="border: 0; border-top: 2px solid #f1f2f6; margin-bottom: 40px;">
 
@@ -32,12 +41,55 @@
 
             <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-start;">
                 {% for city in country.cities %}
-                    <span style="background: #f1f2f6; color: var(--text-main); padding: 10px 20px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border: 1px solid #eee;">
+                    <span style="background: #f1f2f6; color: var(--text-main); padding: 10px 20px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; border: 1px solid #eee;">
                         {{ city }}
                     </span>
                 {% endfor %}
             </div>
         </div>
     </div>
+
+    <script>
+        const countryName = "{{ country.country }}";
+        const stars = document.querySelectorAll('.star');
+        const status = document.getElementById('rating-status');
+
+        // ดึงคะแนนที่เคยบันทึกไว้จาก LocalStorage
+        const savedRating = localStorage.getItem(`rating_${countryName}`);
+        if (savedRating) {
+            updateStars(savedRating);
+            status.innerText = "You rated this country!";
+        }
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const value = star.getAttribute('data-value');
+                localStorage.setItem(`rating_${countryName}`, value);
+                updateStars(value);
+                status.innerText = "Rating saved!";
+                setTimeout(() => { status.innerText = ""; }, 2000);
+            });
+
+            star.addEventListener('mouseover', () => {
+                const value = star.getAttribute('data-value');
+                highlightStars(value);
+            });
+
+            star.addEventListener('mouseout', () => {
+                const currentRating = localStorage.getItem(`rating_${countryName}`) || 0;
+                highlightStars(currentRating);
+            });
+        });
+
+        function highlightStars(value) {
+            stars.forEach(s => {
+                s.style.color = s.getAttribute('data-value') <= value ? '#f1c40f' : '#ddd';
+            });
+        }
+
+        function updateStars(value) {
+            highlightStars(value);
+        }
+    </script>
 </body>
 </html>

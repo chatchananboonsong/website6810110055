@@ -145,3 +145,30 @@ h1 {
 .back-btn:hover .arrow {
     transform: translateX(-5px);
 }
+
+/* สไตล์สำหรับระบบดาว */
+.stars {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 5px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.star {
+    color: #ddd;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.star:hover {
+    transform: scale(1.2);
+}
+
+/* ปรับปรุงพื้นหลังหน้าจอให้เข้ากับระบบใหม่ */
+.rating-container {
+    background: #f9faff;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 20px;
+    border: 1px dashed #6c5ce750;
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Login - Country Explorer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 0;">
+    <div class="login-card">
+        <a href="/" style="text-decoration: none; color: var(--text-soft); font-size: 0.9rem;">← Back</a>
+        <h2 style="color: var(--primary); margin-top: 20px;">Welcome Back</h2>
+        <p style="color: var(--text-soft); font-size: 0.85rem; margin-bottom: 30px;">Please login to your account</p>
+        
+        <form>
+            <div style="text-align: left; margin-bottom: 20px;">
+                <label style="display: block; font-size: 0.9rem; margin-bottom: 8px;">Email Address</label>
+                <input type="email" class="login-input" placeholder="example@mail.com">
+            </div>
+            <div style="text-align: left; margin-bottom: 30px;">
+                <label style="display: block; font-size: 0.9rem; margin-bottom: 8px;">Password</label>
+                <input type="password" class="login-input" placeholder="••••••••">
+            </div>
+            <button type="button" class="select-btn">Login Now</button>
+        </form>
+    </div>
+</body>
+</html>

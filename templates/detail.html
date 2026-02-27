@@ -22,34 +22,44 @@
             <h1 style="margin-top: 30px; margin-bottom: 5px;">{{ country.country }}</h1>
 
             {% if country.capital %}
-            <div style="margin-top: 10px; margin-bottom: 15px;">
-                <span style="background: linear-gradient(135deg, #ffeaa7, #fab1a0); 
-                 padding: 8px 25px; border-radius: 50px; font-weight: 600; 
-                 color: #d63031; display: inline-flex; align-items: center; 
-                 box-shadow: 0 4px 15px rgba(250, 177, 160, 0.4); border: 2px solid #fff;">
+            <div style="margin-top: 10px; margin-bottom: 25px;">
+                <span style="background: linear-gradient(135deg, #ffeaa7, #fab1a0); padding: 8px 25px; border-radius: 50px; font-weight: 600; color: #d63031; display: inline-flex; align-items: center; box-shadow: 0 4px 15px rgba(250, 177, 160, 0.4); border: 2px solid #fff;">
                 🏛️ เมืองหลวง: {{ country.capital }}
                 </span>
             </div>
             {% endif %}
 
-            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; font-size: 0.9rem; color: var(--text-soft);">
-                <span style="background: #f1f2f6; padding: 5px 15px; border-radius: 10px;"><strong>Lat:</strong> {{ country.lat }}</span>
-                <span style="background: #f1f2f6; padding: 5px 15px; border-radius: 10px;"><strong>Long:</strong> {{ country.long }}</span>
+            <h3 style="text-align: left; color: var(--primary); margin-top: 30px; margin-bottom: 20px; display: flex; align-items: center;">
+                <span style="margin-right: 10px;">🏙️</span> รายชื่อเมืองในประเทศ
+            </h3>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-start; margin-bottom: 40px;">
+                {% for city in country.cities %}
+                    <span style="{% if city == country.capital %} background: linear-gradient(135deg, var(--secondary), var(--primary)); color: white; border: 2px solid #fff; box-shadow: 0 4px 10px rgba(108, 92, 231, 0.2); {% else %} background: #f1f2f6; color: var(--text-main); {% endif %} padding: 10px 18px; border-radius: 12px; font-size: 0.9rem; font-weight: 500;">
+                        {{ city }} {% if city == country.capital %} ⭐ {% endif %}
+                    </span>
+                {% endfor %}
             </div>
 
-            <div style="margin: 30px 0; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #fff;">
-                <iframe 
-                    width="100%" 
-                    height="300" 
-                    frameborder="0" 
-                    style="border:0; display: block;" 
-                    src="https://maps.google.com/maps?q={{ country.country }}&t=&z=5&ie=UTF8&iwloc=&output=embed" 
-                    allowfullscreen>
+            <hr style="border: 0; border-top: 2px solid #f1f2f6; margin-bottom: 40px;">
+
+            <h3 style="text-align: left; color: var(--primary); margin-bottom: 15px; display: flex; align-items: center;">
+                <span style="margin-right: 10px;">📍</span> พิกัดและแผนที่
+            </h3>
+            
+            <div style="display: flex; justify-content: flex-start; gap: 15px; margin-bottom: 20px; font-size: 0.9rem;">
+                <span style="background: #fff; border: 1px solid #eee; padding: 8px 15px; border-radius: 10px;"><strong>Latitude:</strong> {{ country.lat }}</span>
+                <span style="background: #fff; border: 1px solid #eee; padding: 8px 15px; border-radius: 10px;"><strong>Longitude:</strong> {{ country.long }}</span>
+            </div>
+
+            <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #fff;">
+                <iframe width="100%" height="350" frameborder="0" style="border:0; display: block;" 
+                        src="https://maps.google.com/maps?q={{ country.lat }},{{ country.long }}&t=&z=5&ie=UTF8&iwloc=&output=embed">
                 </iframe>
             </div>
 
-            <div class="rating-container" style="margin-bottom: 30px;">
-                <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 5px;">Rate this country:</p>
+            <div class="rating-container" style="margin-top: 40px;">
+                <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 5px;">คุณพึงพอใจกับข้อมูลประเทศนี้แค่ไหน?</p>
                 <div class="stars" id="star-rating">
                     <span class="star" data-value="1">★</span>
                     <span class="star" data-value="2">★</span>
@@ -59,36 +69,11 @@
                 </div>
                 <p id="rating-status" style="font-size: 0.8rem; color: var(--secondary); margin-top: 5px; height: 1em;"></p>
             </div>
-
-            <hr style="border: 0; border-top: 2px solid #f1f2f6; margin-bottom: 40px;">
-
-            <h3 style="text-align: left; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center;">
-                <span style="margin-right: 10px;">🏙️</span> รายชื่อเมืองในประเทศ
-            </h3>
-
-            <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-start;">
-                {% for city in country.cities %}
-                    <span style="
-                        {% if city == country.capital %}
-                            background: linear-gradient(135deg, var(--secondary), var(--primary)); 
-                            color: white; 
-                            border: 2px solid #fff;
-                            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.2);
-                        {% else %}
-                            background: #f1f2f6; 
-                            color: var(--text-main);
-                        {% endif %}
-                        padding: 10px 18px; border-radius: 12px; font-size: 0.9rem; transition: 0.3s; font-weight: 500;">
-                        {{ city }} 
-                        {% if city == country.capital %} ⭐ {% endif %}
-                    </span>
-                {% endfor %}
-            </div>
         </div>
     </div>
     
     <script>
-        // ... (Script Rating เดิมของคุณ) ...
+        // Script สำหรับ Rating คงเดิม
         const countryName = "{{ country.country }}";
         const stars = document.querySelectorAll('.star');
         const status = document.getElementById('rating-status');

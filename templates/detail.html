@@ -3,171 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ character.name }} - Umamusume Wiki</title>
+  <title>{{ item.country }} - Wiki</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
-    /* สไตล์เพิ่มเติมสำหรับโครงสร้างหน้า Wiki - โทนสดใส */
-        .wiki-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            padding: 0 20px;
-            color: var(--text-main); /* เปลี่ยนจาก white เป็นเทาเข้ม */
-        }
-
-        .main-content {
-            flex: 1;
-            min-width: 300px;
-            text-align: left;
-        }
-
-        .main-content h1 {
-            text-align: left;
-            border-bottom: 4px solid var(--secondary); /* เปลี่ยนจากแดงเป็นสีมิ้นท์ */
-            padding-bottom: 15px;
-            margin-top: 0;
-            color: var(--primary); /* สีม่วงสดใส */
-            text-shadow: none;
-        }
-
-        .wiki-section {
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
-
-        .wiki-section h2 {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 8px;
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-
-        /* สไตล์ Infobox ด้านข้าง */
-        .infobox {
-            width: 320px;
-            background: var(--card-bg); /* สีขาวสะอาด */
-            border: none;
-            border-radius: 20px;
-            padding: 0;
-            height: fit-content;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* เงาฟุ้งๆ */
-            overflow: hidden;
-        }
-
-        .infobox-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); /* ไล่เฉดสีสดใส */
-            color: white;
-            padding: 15px;
-            font-weight: bold;
-            text-align: center;
-            font-size: 1.3rem;
-            letter-spacing: 1px;
-        }
-
-        .infobox-image {
-            background: #f8f9fa; /* สีพื้นหลังรูปอ่อนๆ */
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 6rem;
-            color: var(--primary);
-            border-bottom: 1px solid #eee;
-        }
-
-        .infobox-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-        }
-
-        .infobox-table tr {
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .infobox-table tr:last-child {
-            border-bottom: none;
-        }
-
-        .infobox-table th {
-            background: #fafafa; /* สีหัวข้อตารางเทาอ่อนมาก */
-            text-align: left;
-            padding: 12px 15px;
-            width: 40%;
-            color: var(--text-soft);
-            font-weight: 600;
-        }
-
-        .infobox-table td {
-            padding: 12px 15px;
-            text-align: left;
-            color: var(--text-main);
-        }
-
-        /* ปรับสีสถานะ "กำลังฝึกซ้อม" ให้ดูสดใสขึ้น */
-        .status-training {
-            color: #2ecc71 !important; 
-            font-weight: bold;
-        }
-
-        .back-btn-container {
-            margin-top: 30px;
-        }
+    .wiki-container { max-width: 1000px; margin: 40px auto; display: flex; flex-wrap: wrap; gap: 30px; padding: 0 20px; }
+    .main-content { flex: 1; min-width: 300px; text-align: left; }
+    .main-content h1 { border-bottom: 4px solid var(--secondary); padding-bottom: 15px; color: var(--primary); }
+    .infobox { width: 320px; background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; height: fit-content; }
+    .infobox-header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 15px; text-align: center; font-weight: bold; }
+    .infobox-image { background: #f8f9fa; height: 250px; display: flex; align-items: center; justify-content: center; font-size: 5rem; color: var(--primary); }
+    .infobox-table { width: 100%; border-collapse: collapse; }
+    .infobox-table th, .infobox-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
   </style>
 </head>
 <body>
 
   <div class="wiki-container">
     <div class="main-content">
-      <h1>{{ character.name }}</h1>
+      <h1>{{ item.country }}</h1>
       
       <div class="wiki-section">
-        <p><strong>{{ character.name }}</strong> ({{ character.capital }}) เป็นหนึ่งในตัวละครหลักจากโปรเจกต์ <em>Umamusume: Pretty Derby</em> ที่มีความสามารถโดดเด่นในด้านการวิ่งแบบ {{ character.continent }}</p>
+        <h2>รายละเอียดเมืองหลวง (Main Base)</h2>
+        {% if item.cities and item.cities|length > 0 %}
+          <p>เมืองหลวงของ <strong>{{ item.country }}</strong> คือ <strong>{{ item.cities[0] }}</strong></p>
+          <p>ซึ่งเมือง {{ item.cities[0] }} นี้เป็นศูนย์กลางหลักในการฝึกซ้อมของม้าสาวในภูมิภาคนี้</p>
+        {% else %}
+          <p>ไม่พบข้อมูลเมืองหลัก</p>
+        {% endif %}
       </div>
 
-      <div class="wiki-section">
-        <h2>ประวัติการฝึกซ้อม</h2>
-        <p>ในฐานะนักวิ่งสาย {{ character.continent }} การฝึกซ้อมจะเน้นไปที่การรักษาความเร็วและความทนทานในสนามแข่ง เพื่อเตรียมพร้อมสำหรับการแข่งขัน Derby Directory ต่อไป</p>
-      </div>
-
-      <div class="wiki-section">
-        <h2>เมนูการฝึกปัจจุบัน</h2>
-        <ul>
-            <li>🏃 Speed Training: เน้นเพิ่มขีดจำกัดความเร็ว</li>
-            <li>💪 Stamina Training: เพิ่มความทนทานในการวิ่งระยะไกล</li>
-        </ul>
-      </div>
-
-      <div class="back-btn-container">
+      <div style="margin-top: 30px;">
         <a href="{{ url_for('index') }}" style="text-decoration: none;">
-            <button class="select-btn" style="width: auto; padding: 10px 25px;">← กลับหน้าหลัก</button>
+          <button class="select-btn" style="width: auto; padding: 10px 25px;">← กลับหน้าหลัก</button>
         </a>
       </div>
     </div>
 
     <aside class="infobox">
-      <div class="infobox-header">{{ character.name }}</div>
-      <div class="infobox-image">
-        {{ character.name[0] }}
-      </div>
+      <div class="infobox-header">{{ item.country }}</div>
+      <div class="infobox-image">{{ item.country[0] }}</div>
       <table class="infobox-table">
         <tr>
-          <th>ชื่อภาษาญี่ปุ่น</th>
-          <td>{{ character.capital }}</td>
+          <th>ภูมิภาค</th>
+          <td>Global</td>
         </tr>
         <tr>
-          <th>สไตล์การวิ่ง</th>
-          <td>{{ character.continent }}</td>
+          <th>เมืองหลวง</th>
+          <td>{{ item.cities[0] if item.cities else 'N/A' }}</td>
         </tr>
         <tr>
           <th>สถานะ</th>
-          <td style="color: #00ff00;">กำลังฝึกซ้อม</td>
-        </tr>
-        <tr>
-            <th>ประเภท</th>
-            <td>Umamusume</td>
+          <td style="color: #2ecc71; font-weight: bold;">Verified</td>
         </tr>
       </table>
     </aside>

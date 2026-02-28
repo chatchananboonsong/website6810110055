@@ -1,4 +1,6 @@
 {
-    "admin@mail.com": "1234",
-    "test@mail.com": "password"
+    "admin@gmail.com": "1234",
+    "test@gmail.com": "password",
+    "somsom@gmail.com": "somsom123",
+    "testuser@gmail.com": "testpass"
 }

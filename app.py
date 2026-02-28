@@ -1,19 +1,34 @@
 from flask import Flask, render_template, abort, request, redirect, url_for, session
+from flask_sqlalchemy import SQLAlchemy 
 import requests
-import json
 import os
+from dotenv import load_dotenv # นำเข้า load_dotenv
+
+# โหลดค่าจากไฟล์ .env
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'dev_key_12345' # รหัสลับสำหรับระบบ Login
-USER_FILE = 'users.json'
 
-def load_users():
-    if not os.path.exists(USER_FILE):
-        # สร้างไฟล์เริ่มต้นถ้ายังไม่มี
-        with open(USER_FILE, 'w') as f: json.dump({"admin@mail.com": "1234"}, f)
-    with open(USER_FILE, 'r', encoding='utf-8') as f:
-        return json.load(f)
+# ดึงค่า Secret Key และ Database URL จาก .env
+app.secret_key = os.getenv('FLASK_SECRET_KEY') 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 
+db = SQLAlchemy(app)
+
+# สร้าง Model ผู้ใช้
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+
+# สร้างฐานข้อมูลและ User เริ่มต้น
+with app.app_context():
+    db.create_all()
+    if not User.query.filter_by(email='admin@gmail.com').first():
+        db.session.add(User(email='admin@gmail.com', password='1234'))
+        db.session.commit()
+
+# --- 2. ฟังก์ชันดึงข้อมูล API (ต้องมีไว้เหมือนเดิม) ---
 def get_combined_data():
     try:
         res_countries = requests.get("https://countriesnow.space/api/v0.1/countries")
@@ -26,12 +41,13 @@ def get_combined_data():
         return countries_data
     except: return []
 
+# --- 3. Routes ---
+
 @app.route('/')
 def index():
     countries = get_combined_data()
     return render_template('index.html', countries=countries)
 
-# --- แก้ไขบั๊ก: เพิ่ม Route 'detail' ที่หายไป ---
 @app.route('/country/<name>')
 def detail(name):
     all_countries = get_combined_data()
@@ -44,11 +60,14 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        users = load_users()
-        if email in users and users[email] == password:
-            session['user'] = email
+        
+        # ค้นหาจาก Database (ลบ load_users ออกไปแล้ว)
+        user = User.query.filter_by(email=email).first()
+        
+        if user and user.password == password:
+            session['user'] = user.email
             return redirect(url_for('index'))
-        return "Login Failed!"
+        return "Login Failed! อีเมลหรือรหัสผ่านไม่ถูกต้อง"
     return render_template('login.html')
 
 @app.route('/logout')
@@ -58,7 +77,8 @@ def logout():
 
 @app.route('/settings')
 def settings():
-    if 'user' not in session: return redirect(url_for('login'))
+    if 'user' not in session: 
+        return redirect(url_for('login'))
     return render_template('settings.html')
 
 if __name__ == '__main__':

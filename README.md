@@ -57,4 +57,8 @@ FLASK_SECRET_KEY=dev_key_12345
 DATABASE_URL=sqlite:///database.db
 ```
 
+##ทดสอบ login
+- **Email**: admin@gmail.com
+- **Password**: 1234
+
 Then open http://127.0.0.1:5000

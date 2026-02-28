@@ -6,7 +6,7 @@
   <title>Country Explorer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // ตั้งค่าธีมสีให้ตรงกับ style.css เดิม
+    // ตั้งค่าธีมสี
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -20,12 +20,12 @@
             'dark-card': '#16213e'
           },
           fontFamily: {
-            poppins: ['Poppins', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],// กำหนดฟอนต์หลักของโปรเจกต์
           }
         }
       }
     }
-    // ตรวจสอบ Theme ทันที
+    // ตรวจสอบ Theme ทันทีที่โหลดหน้าเว็บ
     if (localStorage.getItem('theme') === 'dark') {
         document.documentElement.classList.add('dark');
     }

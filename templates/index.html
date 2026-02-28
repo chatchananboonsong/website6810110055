@@ -4,58 +4,90 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Country Explorer</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-        // ตรวจสอบ Theme ทันทีที่โหลดหน้า
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.add('dark-mode');
-            // เพิ่มสไตล์สำหรับ body ด้วยเพื่อให้ทำงานร่วมกับ CSS ที่เขียนไว้
-            window.addEventListener('DOMContentLoaded', () => {
-                document.body.classList.add('dark-mode');
-            });
+    // ตั้งค่าธีมสีให้ตรงกับ style.css เดิม
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6c5ce7',
+            secondary: '#00cec9',
+            accent: '#ff7675',
+            'bg-light': '#f9faff',
+            'dark-bg': '#1a1a2e',
+            'dark-card': '#16213e'
+          },
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          }
         }
-    </script>
+      }
+    }
+    // ตรวจสอบ Theme ทันที
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body>
-  <nav class="navbar">
-    <div class="nav-container">
-        <a href="/" class="nav-logo">Countrydotoworld</a>
-      <div class="nav-menu">
+<body class="font-poppins bg-bg-light text-[#2d3436] dark:bg-dark-bg dark:text-gray-200 transition-colors duration-300 min-h-screen">
+  
+  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-primary/10 dark:bg-dark-card/90 dark:border-white/10">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="/" class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+        Countrydotoworld
+      </a>
+      <div class="flex items-center gap-4">
           {% if session.get('user') %}
-              <span style="color: var(--text-soft); font-size: 0.9rem; margin-right: 10px;">{{ session['user'] }}</span>
-              <a href="/settings" class="nav-link setting-link">Settings</a>
-              <a href="/logout" class="login-btn" style="background: var(--accent);">Logout</a>
+              <span class="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">{{ session['user'] }}</span>
+              <a href="/settings" class="text-gray-600 hover:text-primary dark:text-gray-300 transition-colors">Settings</a>
+              <a href="/logout" class="bg-accent text-white px-5 py-2 rounded-xl font-semibold shadow-md hover:opacity-90 transition-all">Logout</a>
           {% else %}
-              <a href="/login" class="login-btn">Login</a>
+              <a href="/login" class="bg-gradient-to-r from-primary to-secondary text-white px-8 py-2 rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 transition-all">
+                Login
+              </a>
           {% endif %}
       </div>
     </div>
   </nav>
-  <h1>Country in World</h1>
 
-  <div class="grid">
-    {% for item in countries %}
-    <div class="card">
-      <div class="img-box">
-        {% if item.flag_url %}
-          <img src="{{ item.flag_url }}" alt="{{ item.country }}" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
-        {% else %}
-          <div style="font-size: 4rem; color: var(--primary); font-weight: bold;">
-              {{ item.country[0] }}
-          </div>
-        {% endif %}
-      </div>
-      
-      <div class="info">
-        <h3>{{ item.country }}</h3>
-        <p><strong>Cities:</strong> {{ item.cities|length }}</p>
+  <header class="py-16 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4 dark:text-white drop-shadow-sm">Country in World</h1>
+    <p class="text-gray-500 dark:text-gray-400">สำรวจข้อมูลประเทศต่างๆ ทั่วโลกด้วยปลายนิ้วของคุณ</p>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pb-20">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      {% for item in countries %}
+      <div class="group bg-white dark:bg-dark-card rounded-[30px] overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-transparent dark:border-white/5">
+        <div class="h-56 bg-gray-50 dark:bg-black/20 flex items-center justify-center p-6 relative overflow-hidden">
+          {% if item.flag_url %}
+            <img src="{{ item.flag_url }}" alt="{{ item.country }}" class="max-h-full object-contain group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500 drop-shadow-md">
+          {% else %}
+            <div class="text-6xl font-bold text-primary opacity-20 group-hover:opacity-40 transition-opacity">
+                {{ item.country[0] }}
+            </div>
+          {% endif %}
+        </div>
         
-        <a href="{{ url_for('detail', name=item.country) }}" style="text-decoration: none;">
-            <button class="select-btn">Explore Now</button>
-        </a>
+        <div class="p-8 text-center">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2 tracking-tight">{{ item.country }}</h3>
+          <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 font-medium">
+            <span class="inline-block w-2 h-2 rounded-full bg-secondary mr-2"></span>
+            Total Cities: {{ item.cities|length }}
+          </p>
+          
+          <a href="/country/{{ item.country }}" 
+             class="block w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-primary/20 hover:brightness-105 active:scale-95 transition-all">
+            Explore Now
+          </a>
+        </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
+  </main>
+
 </body>
 </html>

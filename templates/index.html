@@ -10,11 +10,16 @@
   <nav class="navbar">
     <div class="nav-container">
         <a href="/" class="nav-logo">Countrydotoworld</a>
-        <div class="nav-menu">
-            <a href="/" class="nav-link">Home</a>
-            <a href="/login" class="login-btn">Login</a>
-            <a href="/settings" class="nav-link setting-link">Settings</a>
-        </div>
+      <div class="nav-menu">
+          {% if session.get('user') %}
+              <span style="color: var(--text-soft); font-size: 0.9rem; margin-right: 10px;">{{ session['user'] }}</span>
+              <a href="/" class="nav-link">Home</a>
+              <a href="/settings" class="nav-link setting-link">Settings</a>
+              <a href="/logout" class="login-btn" style="background: var(--accent);">Logout</a>
+          {% else %}
+              <a href="/login" class="login-btn">Login</a>
+          {% endif %}
+      </div>
     </div>
   </nav>
   <h1>Country in World</h1>

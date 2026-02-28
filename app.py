@@ -1,67 +1,64 @@
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, request, redirect, url_for, session
 import requests
+import json
+import os
 
 app = Flask(__name__)
+app.secret_key = 'dev_key_12345' # รหัสลับสำหรับระบบ Login
+USER_FILE = 'users.json'
+
+def load_users():
+    if not os.path.exists(USER_FILE):
+        # สร้างไฟล์เริ่มต้นถ้ายังไม่มี
+        with open(USER_FILE, 'w') as f: json.dump({"admin@mail.com": "1234"}, f)
+    with open(USER_FILE, 'r', encoding='utf-8') as f:
+        return json.load(f)
 
 def get_combined_data():
     try:
-        # 1. ดึงข้อมูลชื่อประเทศและเมือง
         res_countries = requests.get("https://countriesnow.space/api/v0.1/countries")
         countries_data = res_countries.json().get("data", [])
-
-        # 2. ดึงข้อมูลรูปธงชาติ
         res_flags = requests.get("https://countriesnow.space/api/v0.1/countries/flag/images")
         flags_data = res_flags.json().get("data", [])
-
-        # 3. ดึงข้อมูลเมืองหลวง
-        res_capitals = requests.get("https://countriesnow.space/api/v0.1/countries/capital")
-        capitals_data = res_capitals.json().get("data", [])
-        capital_map = {item['name']: item['capital'] for item in capitals_data}
-
-        # 4. ดึงข้อมูลพิกัด (Lat/Long)
-        res_positions = requests.get("https://countriesnow.space/api/v0.1/countries/positions")
-        pos_data = res_positions.json().get("data", [])
-        pos_map = {item['name']: {'lat': item['lat'], 'long': item['long']} for item in pos_data}
-
-        # สร้าง Map สำหรับรูปธง
         flag_map = {item['name']: item['flag'] for item in flags_data}
-        
         for country in countries_data:
-            name = country['country']
-            country['flag_url'] = flag_map.get(name, "https://via.placeholder.com/150")
-            country['capital'] = capital_map.get(name, "")
-            
-            # ใส่ค่าพิกัด
-            coords = pos_map.get(name, {'lat': 0, 'long': 0})
-            country['lat'] = coords['lat']
-            country['long'] = coords['long']
-            
+            country['flag_url'] = flag_map.get(country['country'], "https://via.placeholder.com/150")
         return countries_data
-    except Exception as e:
-        print(f"Error: {e}")
-        return []
-
-# --- Routes ---
+    except: return []
 
 @app.route('/')
 def index():
     countries = get_combined_data()
     return render_template('index.html', countries=countries)
 
+# --- แก้ไขบั๊ก: เพิ่ม Route 'detail' ที่หายไป ---
 @app.route('/country/<name>')
 def detail(name):
     all_countries = get_combined_data()
     country = next((item for item in all_countries if item["country"] == name), None)
-    if not country:
-        abort(404)
+    if not country: abort(404)
     return render_template('detail.html', country=country)
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        users = load_users()
+        if email in users and users[email] == password:
+            session['user'] = email
+            return redirect(url_for('index'))
+        return "Login Failed!"
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('index'))
 
 @app.route('/settings')
 def settings():
+    if 'user' not in session: return redirect(url_for('login'))
     return render_template('settings.html')
 
 if __name__ == '__main__':

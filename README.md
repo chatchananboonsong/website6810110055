@@ -51,5 +51,10 @@ pip install -r requirements.txt
 ```powershell
 python app.py
 ```
+4. ตั้งค่าไฟล์สภาพแวดล้อม:
+```powershell
+FLASK_SECRET_KEY=dev_key_12345
+DATABASE_URL=sqlite:///database.db
+```
 
 Then open http://127.0.0.1:5000

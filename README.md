@@ -2,10 +2,17 @@
 
 เว็บแอปพลิเคชันสำหรับสำรวจข้อมูลประเทศทั่วโลก พัฒนาด้วย **Flask Framework** พร้อมระบบสมาชิกที่จัดเก็บข้อมูลด้วย **SQLite** และการจัดการความปลอดภัยผ่าน **Environment Variables**
 
-Basic Flask web app.
+---
 
-Run:
+## ✨ คุณสมบัติ (Features)
 
+- **Country Discovery**: แสดงข้อมูลประเทศพร้อมธงชาติแบบ Real-time โดยการรวมข้อมูล (Merge) จาก API ภายนอก 2 แหล่ง
+- **User Authentication**: ระบบจัดการผู้ใช้ (Login/Logout) ที่เชื่อมต่อกับฐานข้อมูล SQLite ผ่าน SQLAlchemy
+- **Secure Configuration**: แยกค่าความลับของระบบ (เช่น Secret Key) ไว้ในไฟล์ `.env` เพื่อความปลอดภัยตามมาตรฐานสากล
+- **Database Migration**: มีระบบตรวจสอบและย้ายข้อมูลอัตโนมัติจากไฟล์ `users.json` เข้าสู่ฐานข้อมูลใหม่
+- **Responsive UI**: หน้าตาเว็บทันสมัย สวยงาม และรองรับการใช้งานทุกหน้าจอ (Mobile Friendly)
+
+---
 1. Create and activate a virtualenv:
 
 ```powershell

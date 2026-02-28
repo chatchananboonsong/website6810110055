@@ -6,7 +6,7 @@
 
 ## ✨ คุณสมบัติ (Features)
 
-- **Country Discovery**: แสดงข้อมูลประเทศพร้อมธงชาติแบบโดยการรวมข้อมูลจาก API ภายนอก 2 แหล่ง
+- **Country Discovery**: แสดงข้อมูลประเทศพร้อมธงชาติและที่ตั้งโดยการดึงข้อมูลจาก API 
 - **User Authentication**: ระบบจัดการผู้ใช้ (Login/Logout) ที่เชื่อมต่อกับฐานข้อมูล SQLite ผ่าน SQLAlchemy
 - **Secure Configuration**: แยกค่าความลับของระบบไว้ในไฟล์ `.env` เพื่อความปลอดภัย
 

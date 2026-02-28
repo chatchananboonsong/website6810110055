@@ -30,15 +30,6 @@
 
             <hr style="border: 0; border-top: 1px solid #f1f2f6; margin: 20px 0;">
 
-            <div class="setting-item">
-                <div style="text-align: left;">
-                    <h4 style="margin: 0; color: var(--text-main);">ภาษา (Language)</h4>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-soft);">เลือกภาษาที่คุณถนัด</p>
-                </div>
-                <select style="padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
-                    <option>ภาษาไทย</option>
-                    <option>English</option>
-                </select>
             </div>
 
             <button class="select-btn" style="margin-top: 40px;">บันทึกการตั้งค่า</button>
@@ -54,7 +45,7 @@
             body.classList.add('dark-mode');
             darkModeToggle.checked = true;
         }
-
+        // ดักจับเหตุการณ์เมื่อมีการคลิก Toggle
         darkModeToggle.addEventListener('change', () => {
             if (darkModeToggle.checked) {
                 body.classList.add('dark-mode');
@@ -63,50 +54,6 @@
                 body.classList.remove('dark-mode');
                 localStorage.setItem('theme', 'light');
             }
-        });
-
-        // --- ระบบเปลี่ยนภาษา (Simple Translation) ---
-        const langSelect = document.querySelector('select');
-        
-        // พจนานุกรมภาษา
-        const translations = {
-            en: {
-                title: "Settings",
-                darkmode: "Dark Mode",
-                darkmode_desc: "Change background to dark",
-                lang: "Language",
-                lang_desc: "Choose your preferred language",
-                home: "Home",
-                logout: "Logout"
-            },
-            th: {
-                title: "การตั้งค่า (Settings)",
-                darkmode: "โหมดถนอมสายตา (Dark Mode)",
-                darkmode_desc: "เปลี่ยนพื้นหลังเป็นสีเข้ม",
-                lang: "ภาษา (Language)",
-                lang_desc: "เลือกภาษาที่คุณถนัด",
-                home: "หน้าหลัก",
-                logout: "ออกจากระบบ"
-            }
-        };
-
-        function applyLanguage(lang) {
-            document.querySelector('h2').innerText = translations[lang].title;
-            document.querySelectorAll('.setting-item h4')[0].innerText = translations[lang].darkmode;
-            document.querySelectorAll('.setting-item p')[0].innerText = translations[lang].darkmode_desc;
-            document.querySelectorAll('.setting-item h4')[1].innerText = translations[lang].lang;
-            document.querySelectorAll('.setting-item p')[1].innerText = translations[lang].lang_desc;
-            document.querySelector('.nav-link').innerText = translations[lang].home;
-        }
-
-        // โหลดภาษาเริ่มต้น
-        const savedLang = localStorage.getItem('lang') || 'th';
-        langSelect.value = savedLang;
-        applyLanguage(savedLang);
-
-        langSelect.addEventListener('change', () => {
-            localStorage.setItem('lang', langSelect.value);
-            applyLanguage(langSelect.value);
         });
     </script>
 </body>

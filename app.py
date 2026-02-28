@@ -31,15 +31,36 @@ with app.app_context():
 # --- 2. ฟังก์ชันดึงข้อมูล API (ต้องมีไว้เหมือนเดิม) ---
 def get_combined_data():
     try:
+        # 1. ดึงรายชื่อประเทศและเมือง
         res_countries = requests.get("https://countriesnow.space/api/v0.1/countries")
         countries_data = res_countries.json().get("data", [])
+        
+        # 2. ดึงรูปธงชาติ
         res_flags = requests.get("https://countriesnow.space/api/v0.1/countries/flag/images")
-        flags_data = res_flags.json().get("data", [])
-        flag_map = {item['name']: item['flag'] for item in flags_data}
+        flags_data = {item['name']: item['flag'] for item in res_flags.json().get("data", [])}
+        
+        # 3. ดึงข้อมูลเมืองหลวง (เพิ่มส่วนนี้)
+        res_capitals = requests.get("https://countriesnow.space/api/v0.1/countries/capital")
+        capitals_data = {item['name']: item['capital'] for item in res_capitals.json().get("data", [])}
+
+        # 4. ดึงข้อมูลพิกัด (เพิ่มส่วนนี้)
+        res_positions = requests.get("https://countriesnow.space/api/v0.1/countries/positions")
+        positions_data = {item['name']: {'lat': item['lat'], 'long': item['long']} for item in res_positions.json().get("data", [])}
+
+        # รวมข้อมูลเข้าด้วยกัน
         for country in countries_data:
-            country['flag_url'] = flag_map.get(country['country'], "https://via.placeholder.com/150")
+            name = country['country']
+            country['flag_url'] = flags_data.get(name, "https://via.placeholder.com/150")
+            country['capital'] = capitals_data.get(name, "ไม่ระบุ")
+            
+            pos = positions_data.get(name, {'lat': 0, 'long': 0})
+            country['lat'] = pos['lat']
+            country['long'] = pos['long']
+            
         return countries_data
-    except: return []
+    except Exception as e:
+        print(f"Error: {e}")
+        return []
 
 # --- 3. Routes ---
 

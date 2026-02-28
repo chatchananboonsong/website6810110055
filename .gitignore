@@ -31,6 +31,6 @@ env.bak/
 venv.bak/
 .ipynb_checkpoints
 users.json
-.env
-instance/
-database.db
+#.env
+#instance/
+#database.db

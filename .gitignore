@@ -21,7 +21,6 @@ coverage.xml
 __pycache__/
 *.pyc
 
-.env
 .envrc
 .venv
 env/

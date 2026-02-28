@@ -355,3 +355,21 @@ body {
     left: 28px;
 }
 
+/* เพิ่มไว้ล่างสุดของ style.css */
+body.dark-mode {
+    --bg-light: #1a1a2e;
+    --card-bg: #16213e;
+    --text-main: #ef3434;
+    --text-soft: #a2a8d3;
+    --primary: #a29bfe; /* สีม่วงที่อ่อนลงเพื่อให้สบายตาในที่มืด */
+}
+
+body.dark-mode .navbar {
+    background: rgba(22, 33, 62, 0.95);
+}
+
+body.dark-mode .login-input {
+    background: #0f3460;
+    border-color: #16213e;
+    color: white;
+}

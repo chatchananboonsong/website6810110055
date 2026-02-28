@@ -6,6 +6,16 @@
   <title>{{ country.country }} - Wiki</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script>
+        // ตรวจสอบ Theme ทันทีที่โหลดหน้า
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+            // เพิ่มสไตล์สำหรับ body ด้วยเพื่อให้ทำงานร่วมกับ CSS ที่เขียนไว้
+            window.addEventListener('DOMContentLoaded', () => {
+                document.body.classList.add('dark-mode');
+            });
+        }
+    </script>
 </head>
 <body>
     <div style="max-width: 900px; margin: auto; padding: 20px;">

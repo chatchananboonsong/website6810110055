@@ -40,7 +40,7 @@ pip install -r requirements.txt
 ```powershell
 python app.py
 ```
-4. ตั้งค่าไฟล์สภาพแวดล้อม:
+4. ตั้งค่าไฟล์สภาพแวดล้อมใน `.env`:
 ```powershell
 FLASK_SECRET_KEY=dev_key_12345
 DATABASE_URL=sqlite:///database.db

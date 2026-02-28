@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Country Explorer</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script>
+        // ตรวจสอบ Theme ทันทีที่โหลดหน้า
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+            // เพิ่มสไตล์สำหรับ body ด้วยเพื่อให้ทำงานร่วมกับ CSS ที่เขียนไว้
+            window.addEventListener('DOMContentLoaded', () => {
+                document.body.classList.add('dark-mode');
+            });
+        }
+    </script>
 </head>
 <body>
   <nav class="navbar">
@@ -13,7 +23,6 @@
       <div class="nav-menu">
           {% if session.get('user') %}
               <span style="color: var(--text-soft); font-size: 0.9rem; margin-right: 10px;">{{ session['user'] }}</span>
-              <a href="/" class="nav-link">Home</a>
               <a href="/settings" class="nav-link setting-link">Settings</a>
               <a href="/logout" class="login-btn" style="background: var(--accent);">Logout</a>
           {% else %}
@@ -48,6 +57,5 @@
     </div>
     {% endfor %}
   </div>
-
 </body>
 </html>

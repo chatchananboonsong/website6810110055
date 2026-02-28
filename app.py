@@ -24,8 +24,8 @@ class User(db.Model):
 # สร้างฐานข้อมูลและ User เริ่มต้น
 with app.app_context():
     db.create_all()
-    if not User.query.filter_by(email='admin@gmail.com').first():
-        db.session.add(User(email='admin@gmail.com', password='1234'))
+    if not User.query.filter_by(email='test@gmail.com').first():
+        db.session.add(User(email='test@gmail.com', password='1234'))
         db.session.commit()
 
 # --- 2. ฟังก์ชันดึงข้อมูล API (ต้องมีไว้เหมือนเดิม) ---
